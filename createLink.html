@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="menu"></div>
+    <script>
+    // 原文出处https://dev.opera.com/articles/javascript-best-practices/
+
+    // 动态生成不同的链接
+    function createLink(text, url) {
+        var newLink = document.createElement('a');
+        newLink.setAttribute('href', url);
+        newLink.appendChild(document.createTextNode(text));
+        return newLink;
+    }
+
+    function createMenu() {
+        var menu = document.getElementById('menu');
+        var items = [{
+            t: 'Home',
+            u: 'index.html'
+        }, {
+            t: 'Sales',
+            u: 'sales.html'
+        }, {
+            t: 'Contact',
+            u: 'contact.html'
+        }];
+        for (var i = 0; i < items.length; i++) {
+            var item = createLink(items[i].t, items[i].u);
+            console.log(items.length);
+            item.className = 'menu-item';
+            menu.appendChild(item);
+        }
+    }
+    createMenu();
+    </script>
+</body>
+
+</html>
