@@ -35,6 +35,7 @@
     // 如果给每个元素都来一个改变元素的方法, 累不累?
     // 宽/高/色/隐藏/重置 这5个数据放到一个数组里岂不是更好?何必分开一个一个设置
     function changeStyle(elem, attr, value) {
+    	// elem.style.attr无效, 因为attr是字符串, 必须用elem.style[attr]
         elem.style[attr] = value;
     }
     window.onload = function() {
@@ -45,6 +46,7 @@
         // 下面是错误的代码
         // 	for(var i=0,len=oBtn.length;i<len;i++){
         // 		oBtn[i].addEventListener('click', function(){
+        //			 这里面的 i 引用这外部变量, 因此是一个闭包, 循环内的闭包尤为要注意
         //			 changeStyle(oDiv, oAtt[i], oVal[i]);
         // 		})
         // 	}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>网页换肤</title>
+	<style>
+	body, ul, li{margin: 0;padding: 0;}
+	html, body{height: 100%;}
+	body{font: 12px/1.5 Tahoma;}
+	li{list-style-type: none;}
+	a:link, a:visited{text-decoration: none;}
+	a:hover{text-decoration: underline;}
+	#outer{width: 500px;margin:0 auto;overflow:hidden;zoom:1;}
+	#skin, #nav{overflow:hidden;zoom:1;}
+	#skin{margin:10px 0;}
+	#skin li{float:left;width:6px;height:6px;cursor:pointer;overflow:hidden;margin-right:10px;text-indent:-9999px;border-width:4px;border-style:solid;}
+	#skin li.current{background:#fff!important}
+	#red{border-color:red;background:red;}
+	#green{border-color:green;background:green;}
+	#black{border-color:black;background:black;}
+	#nav{border:1px solid #fff;}
+	#nav li{float:left;width:82px;line-height:25px;text-align:center;border-right:1px solid #fff;}
+	#nav li:last-child{border-right-width: 0;}
+	#nav a{color:#fff;}
+	</style>
+	<link rel="stylesheet" href="red.css" type="text/css">
+</head>
+<body>
+	<div id="outer">
+		<ul id="skin">
+			<li id="red" title="红色" class="current"></li>
+			<li id="green" title="绿色"></li>
+			<li id="black" title="黑色"></li>
+		</ul>
+		<ul id="nav">
+			<li><a href="javascript:;">新闻</a></li>
+			<li><a href="javascript:;">娱乐</a></li>
+			<li><a href="javascript:;">体育</a></li>
+			<li><a href="javascript:;">电影</a></li>
+			<li><a href="javascript:;">音乐</a></li>
+			<li><a href="javascript:;">旅游</a></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+	// 思路
+	// 1. 通过引用不同的css实现换肤
+	// 2. 像这种同样功能不同效果的三个按钮, 一定要用 for
+
+	// 反思
+	// 1. 这里通过引用不同的css实现换肤, 那是否可以用js实现, 把需要更改css的参数放到一个对象里
+	// 像这样
+	// var skin = {
+	//	red:   {body: "background:#FDD", nav: "background:red;"},
+	//  green: {body: "background:#A3C5A8", nav: "background:green;"},
+	//	black: {body: "background:#ccc", nav: "background:black;"}
+	// }
+	// 发现还是引用css简单, 而且, 在 stylesheet 中的 css 不好更改样式
+	// 用现在这样的办法, 清晰明了
+		window.onload= function(){
+			var oLink = document.getElementsByTagName('link')[0];
+			var oSkin = document.getElementById('skin').getElementsByTagName('li');
+			for(var i = 0, len = oSkin.length; i < len; i++){
+				oSkin[i].addEventListener('click', function(){
+					for(var c in oSkin){ oSkin[c].className = '';}
+					this.className = 'current';
+					oLink.href = this.id + '.css';
+				})
+			}
+		}
+	</script>
+</body>
+</html>
