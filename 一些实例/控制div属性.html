@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>控制div属性</title>
+    <style>
+    .outer {
+        width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background: black;
+        margin: 10px auto;
+        display: block;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <button value="变宽">变宽</button>
+        <button value="变高">变高</button>
+        <button value="变色">变色</button>
+        <button value="隐藏">隐藏</button>
+        <button value="重置">重置</button>
+        <div id="div1"></div>
+    </div>
+    <script>
+    // 写之前问问自己
+    // 如果给每个元素都来一个改变元素的方法, 累不累?
+    // 宽/高/色/隐藏/重置 这5个数据放到一个数组里岂不是更好?何必分开一个一个设置
+    function changeStyle(elem, attr, value) {
+        elem.style[attr] = value;
+    }
+    window.onload = function() {
+        var oBtn = document.getElementsByTagName('button');
+        var oDiv = document.getElementById('div1');
+        var oAtt = ['width', 'height', 'background', 'display', 'display'];
+        var oVal = ['200px', '200px', 'red', 'none', 'block'];
+        // 下面是错误的代码
+        // 	for(var i=0,len=oBtn.length;i<len;i++){
+        // 		oBtn[i].addEventListener('click', function(){
+        //			 changeStyle(oDiv, oAtt[i], oVal[i]);
+        // 		})
+        // 	}
+
+        // 正确的姿势
+        for (var i = 0; i < oBtn.length; i++) {
+            oBtn[i].index = i;
+            function aaa(){console.log(i)}
+            oBtn[i].onclick = function() {
+            	// element.style.cssText返回一个字符串, 内容是元素的style上的属性值
+            	// && 操作符, 如果两个都的正确, 则会返回后面的那个值
+            	// 运算符优先级 - > == > &&
+            	// 通过document.getElementsByTagName('button').index 
+            	// 获取被点击的元素的索引值, 不能用 "i" !!!!
+            	// 当被点击的元素是最后一个, 令 oDiv 的 style 为空.
+                this.index == oBtn.length - 1 && (oDiv.style.cssText = "");
+                changeStyle(oDiv, oAtt[this.index], oVal[this.index])
+            }
+        }
+    };
+    </script>
+</body>
+
+</html>

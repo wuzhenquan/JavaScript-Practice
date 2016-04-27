@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+demo抄自http://sandbox.runjs.cn/show/emvuwq08
+在知乎上看到的回答
+
+作者：Jesse
+链接：https://www.zhihu.com/question/43687153/answer/96513989
+ -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>cache form</title>
+    <style media="screen">
+    html,
+    body,
+    div,
+    form,
+    label,
+    input,
+    textarea {
+        margin: 0;
+        padding: 0;
+    }
+    
+    html {
+        font: 15px/1.75 Menlo, Consolas, "Lucida Console", monospace, Verdana, "Microsoft Yahei", sans-serif;
+        color: #222;
+        background: #F2F2F2;
+    }
+    
+    body {
+        padding: 10px 0;
+    }
+    
+    .txt,
+    .txa {
+        border-radius: 3px;
+        border: 1px solid #CCC;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+        font-size: 1rem;
+        padding: 3px 3px;
+        line-height: 1.5em;
+        color: #666;
+        width: 100%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    }
+    
+    .btn {
+        border-radius: 3px;
+        width: 100%;
+        border: 1px solid #D5D5D5;
+        font-size: 1rem;
+        line-height: 1.5em;
+        padding: 3px 0.5em;
+        background-color: #eee;
+        background-image: linear-gradient(#FCFCFC, #EEE);
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+        -webkit-appearance: none;
+    }
+    
+    .btn:hover {
+        border-color: #CCC;
+        background-color: #DDD;
+        background-image: linear-gradient(#EEE, #DDD);
+    }
+    
+    .btn:focus,
+    .btn:active {
+        outline: 0px none;
+        border-color: #51A7E8;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn[disabled],
+    .btn[disabled]:hover,
+    .btn[disabled]:active {
+        color: rgba(102, 102, 102, 0.5);
+        background-image: none;
+        background-color: #EEE;
+        box-shadow: none;
+        border: 1px solid #D5D5D5;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+    
+    .lbl {
+        color: #888;
+        padding-right: 10px
+    }
+    
+    .rdo,
+    .chk {
+        margin-top: -2px;
+        vertical-align: middle;
+    }
+    
+    .sel {
+        padding: 1px 3px;
+        border: 1px solid #CCC;
+        border-radius: 3px;
+        font-size: 1rem;
+        height: 30px;
+        min-width: 150px;
+    }
+    
+    .sel[multiple] {
+        height: 100px;
+        vertical-align: middle;
+    }
+    
+    .txt:focus,
+    .txa:focus,
+    .sel:focus {
+        border-color: #66AFE9;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 5px rgba(102, 175, 233, 0.6);
+        outline: 0px none;
+    }
+    
+    .main {
+        width: 600px;
+        margin: 0 auto;
+        background: #FFF;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .content {
+        padding: 10px;
+    }
+    
+    .fld {
+        margin-bottom: 10px;
+    }
+    
+    .fld-time {
+        color: #BBB;
+        text-align: right;
+        height: 1.75em;
+    }
+    
+    @media only screen and (max-device-width: 800px) {
+        .main {
+            width: 96%;
+        }
+        .sel[multiple] {
+            height: 30px;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="content">
+            <form action="http://httpbin.org/post" class="cachefm ajaxfm" method="POST" id="user_form" autocomplete="off">
+                <div class="fld">
+                    <label class="lbl">账号</label>
+                    <input type="text" class="txt" name="user_name" value="" />
+                </div>
+                <div class="fld">
+                    <label class="lbl">地址</label>
+                    <input type="text" class="txt" name="user_address" value="" />
+                </div>
+                <div class="fld">
+                    <label class="lbl">性别</label>
+                    <label>
+                        <input type="radio" class="rdo" name="user_gender" value="male" /> 男</label>
+                    <label>
+                        <input type="radio" class="rdo" name="user_gender" value="female" /> 女</label>
+                </div>
+                <div class="fld">
+                    <label class="lbl">状态</label>
+                    <label>
+                        <input type="checkbox" class="chk" name="user_status" value="ok" /> 正常</label>
+                </div>
+                <div class="fld">
+                    <label class="lbl">运动</label>
+                    <label>
+                        <input type="checkbox" class="chk" name="user_sports[]" value="swimming" /> 游泳</label>
+                    <label>
+                        <input type="checkbox" class="chk" name="user_sports[]" value="mountaineering" /> 登山</label>
+                    <label>
+                        <input type="checkbox" class="chk" name="user_sports[]" value="jumping" /> 蹦极</label>
+                    <label>
+                        <input type="checkbox" class="chk" name="user_sports[]" value="running" /> 跑步</label>
+                </div>
+                <div class="fld">
+                    <label class="lbl">城市</label>
+                    <select name="user_city" class="sel">
+                        <option value="">请选择地区</option>
+                        <option value="1">北京</option>
+                        <option value="2">上海</option>
+                        <option value="3">广州</option>
+                        <option value="4">深圳</option>
+                    </select>
+                </div>
+                <div class="fld">
+                    <label class="lbl">兴趣</label>
+                    <select name="user_interest[]" class="sel" multiple="multiple">
+                        <option value="movie">电影</option>
+                        <option value="music">音乐</option>
+                        <option value="travel">旅行</option>
+                        <option value="game">游戏</option>
+                    </select>
+                </div>
+                <div class="fld">
+                    <label class="lbl">简介</label>
+                    <textarea class="txa" name="user_brief" cols="50" rows="3"></textarea>
+                </div>
+                <div class="fld">
+                    <label class="lbl">清空</label>
+                    <label>
+                        <input type="checkbox" class="chk" name="clear_form" value="yes" /> 请求正确后，清空form</label>
+                </div>
+                <div class="fld fld-time">
+                    <span class="form-edit-time"></span>
+                </div>
+                <div class="fld">
+                    <input type="submit" class="btn" value="保 存" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+    function ID(id) {
+        return document.getElementById(id);
+    }
+
+    function Q(query, child) { // [...document.querySelectorAll(query)]
+        var qs = typeof query === 'object' && child ? query.querySelectorAll(child) : document.querySelectorAll(query);
+        return 'from' in Array ? Array.from(qs) : Array.prototype.slice.call(qs);
+    }
+
+    function addEvent(el, evt, func) {
+        return !el ? null : (el.addEventListener ? el.addEventListener(evt, func, false) : (el.attacheEvent ? el.attacheEvent('on' + evt, func) : null));
+    }
+
+    function addEvents(els, evt, func) {
+        for (var i = 0; i < els.length; i++) addEvent(els[i], evt, func);
+    }
+
+    function newXhr() {
+        return window.XMLHttpRequest ? new XMLHttpRequest() : (window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : null);
+    }
+
+    function setAttributes(obj, arr) {
+        for (var i in arr) obj[i] = arr[i];
+    }
+
+    function cacheKey(fm) { // 简单的就用 location.href 和 form的id来拼接一个唯一key
+        return location.href + '!!' + fm.id;
+    }
+
+    function dateTime(date) {
+        var d = [date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()];
+        for (var k in d)
+            if (d[k].toString().length < 2) d[k] = '0' + d[k];
+        return d.slice(0, 3).join('-') + ' ' + d.slice(3, 6).join(':') + '.' + d[6];
+    }
+
+    function cacheForm(key, fmTime) {
+        var date = new Date();
+        fmTime.innerHTML = dateTime(date);
+        var values = Q('.txt,.txa,.sel,.chk:checked,.rdo:checked').reduce(function(a, e) {
+            if (e.name) {
+                if (/\[\]$/.test(e.name)) { // 表单为数组情况
+                    if (!a[e.name]) a[e.name] = [];
+                    if ('select' === e.tagName.toLowerCase()) { // 多选select
+                        Q(e, 'option').forEach(function(o) {
+                            if (o.selected) a[e.name].push(o.value);
+                        });
+                    } else {
+                        a[e.name].push(e.value);
+                    }
+                } else {
+                    a[e.name] = e.value;
+                }
+            }
+            return a;
+        }, {});
+        localStorage.setItem(key, JSON.stringify({
+            time: date.getTime(),
+            values: values
+        }));
+    }
+
+    function setValue(els, val) { // 只考虑了基本的form表单，如果有 <input name="txtName[]" value="" /> 这类数组，可以自行添加兼容
+        els.forEach(function(e) {
+            if (e.type && ['radio', 'checkbox'].indexOf(e.type) >= 0) {
+                e.checked = Array.isArray(val) ? val.indexOf(e.value) > -1 : (true === val || false === val ? val : (e.value === val ? true : false));
+            } else if (e.type && ['button', 'submit', 'reset'].indexOf(e.type) >= 0) { // 一般情况用不到此类
+                e.disabled = !!val;
+            } else if ('select' === e.tagName.toLowerCase() && e.multiple) {
+                Q(e, 'option').forEach(function(o) {
+                    o.selected = Array.isArray(val) ? val.indexOf(o.value) > -1 : val === o.value;
+                });
+            } else { // 表单为单个元素 select 支持通过直接赋值修改 selectedIndex
+                e.value = val;
+            }
+        });
+    }
+
+    function ajaxPost(xhr, url, data, func, btn, type) {
+        if (btn.disabled) return false;
+        setAttributes(btn, {
+            'disabled': true,
+            src_value: btn.value,
+            value: '正在请求...'
+        });
+        type = type || 'json';
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                setAttributes(btn, {
+                    disabled: false,
+                    value: btn.src_value
+                });
+                if (xhr.status == 200) {
+                    var rsp = (xhr.responseText + '').replace(/(^\s+)|(\s+$)/, '');
+                    func('json' === type ? JSON.parse(rsp) : rsp);
+                } else {
+                    alert('请求错误' + (xhr.responseText ? ' ' + xhr.responseText : ''), false);
+                }
+            }
+        };
+        xhr.open('POST', url || location.href);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        if ('json' === type) xhr.setRequestHeader('Accept', 'application/json');
+        if (typeof data === 'string') xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(data);
+        return true;
+    }
+
+    function initForm() {
+        if (Q('form[method=POST]').length <= 0 || !('localStorage' in window) || !('FormData' in window)) { // 只针对POST表单的初始化
+            alert('无需要初始化表单或不支持'); // 无需要初始化表单或不支持
+            return;
+        }
+        if (Q('form.cachefm').length > 0) { // 有需要cache的给form加上class cachefm
+            Q('form.cachefm').forEach(function(f) {
+                var fmid = f.id;
+                var ckey = cacheKey(f); // cacheKey针对页面URL情况作调整，比如页面每次打开都有token的，就不应该直接用location.href
+                var cache = localStorage.getItem(ckey);
+                var fmTime = Q('#' + fmid + ' .form-edit-time')[0]; // 纪录form中元素最后修改时间
+                if (cache) {
+                    var cj = JSON.parse(cache);
+                    if (cj) {
+                        for (var k in cj.values) {
+                            setValue(Q('#' + fmid + ' [name="' + k + '"]'), cj.values[k]);
+                        }
+                        fmTime.innerHTML = dateTime(new Date(cj.time));
+                    }
+                }
+                // 设置 input为text和textare的缓存，全部使用class选择器可以将不需要设置的input方便剔除
+                addEvents(Q('#' + fmid + ' .txt, #' + fmid + ' .txa'), 'input', function() {
+                    cacheForm(ckey, fmTime);
+                });
+                // 设置 select radio checkbox change事件纪录
+                addEvents(Q('#' + fmid + ' .sel, #' + fmid + ' .chk, #' + fmid + ' .rdo'), 'change', function() {
+                    cacheForm(ckey, fmTime);
+                });
+            });
+        }
+        // 对需要ajax提交的 给 form的class增加 ajaxfm 即可
+        addEvents(Q('form.ajaxfm'), 'submit', function(evt) {
+            var fm = this;
+            var xhr = newXhr();
+            if (!xhr) return;
+            evt.preventDefault();
+            var fmData = new FormData(this); // 使用FormData生成的Content-Type自动为multipart格式，不需要手动添加 Content-Type
+            ajaxPost(xhr, this.getAttribute('action') || location.href, fmData, function(r) {
+                if (r && r.form) { // 替换自己的解析请求结果
+                    if (r.form.clear_form === 'yes' && fm.classList.contains('cachefm')) {
+                        localStorage.removeItem(cacheKey(fm)); // 判断表单提交成功后，手动清除localStorage缓存
+                        Q('#' + fm.id + ' .form-edit-time')[0].innerHTML = '';
+                        fm.reset(); // 清除form内容
+                        alert('保存成功，清空form');
+                    } else {
+                        alert('保存成功，继续保留form填写内容');
+                    }
+                } else {
+                    alert('请求已经完成');
+                }
+            }, Q('#' + fm.id + ' [type=submit]')[0], 'json');
+        });
+    }
+    window.onload = function() {
+        initForm();
+    };
+    </script>
+</body>
+
+</html>
+<style></style>
+<script></script>
+<!-- Generated by RunJS (Mon Apr 25 22:29:50 CST 2016) 2ms -->
