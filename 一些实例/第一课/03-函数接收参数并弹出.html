@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>函数接收参数并弹出</title>
+	<style>
+		body{font:12px/1.5 Tahoma;text-align:center;}
+		code,input,button{font-family:inherit;}
+		input{border:1px solid #ccc;padding:3px;}
+		button{cursor:pointer;}
+	</style>
+</head>
+<body>
+	<p><input type="text" value="厦门市"></p>
+	<p><input type="text" value="集美区"></p>
+	<p><button>传参</button></p>
+	<script>
+		function myFn(a){
+			alert(a.value);
+		}
+		window.onload = function(){
+			var oInput = document.getElementsByTagName("input");
+			var oBtn = document.getElementsByTagName('button')[0];
+			oBtn.addEventListener('click', function(){
+				for(var i=0, len=oInput.length;i<len;i++){
+					myFn(oInput[i])
+				}
+				
+			});
+		}
+	</script>
+</body>
+</html>
