@@ -38,7 +38,7 @@
     	// elem.style.attr无效, 因为attr是字符串, 必须用elem.style[attr]
         elem.style[attr] = value;
     }
-    window.onload = function() {
+
         var oBtn = document.getElementsByTagName('button');
         var oDiv = document.getElementById('div1');
         var oAtt = ['width', 'height', 'background', 'display', 'display'];
@@ -53,20 +53,19 @@
 
         // 正确的姿势
         for (var i = 0; i < oBtn.length; i++) {
-            oBtn[i].index = i;
-            function aaa(){console.log(i)}
-            oBtn[i].onclick = function() {
-            	// element.style.cssText返回一个字符串, 内容是元素的style上的属性值
-            	// && 操作符, 如果两个都的正确, 则会返回后面的那个值
-            	// 运算符优先级 - > == > &&
-            	// 通过document.getElementsByTagName('button').index 
-            	// 获取被点击的元素的索引值, 不能用 "i" !!!!
-            	// 当被点击的元素是最后一个, 令 oDiv 的 style 为空.
+            oBtn[i].index = i;// 使得 oBtn[0].index = 0至oBtn[4].index = 4,
+            oBtn[i].addEventListener('click', function(){
+                // element.style.cssText返回一个字符串, 内容是元素的style上的属性值
+                // && 操作符, 如果两个都的正确, 则会返回后面的那个值
+                // 运算符优先级 - > == > &&
+                // 通过document.getElementsByTagName('button').index 
+                // 获取被点击的元素的索引值, 不能用 "i" !!!!
+                // 当被点击的元素是最后一个, 令 oDiv 的 style 为空.
                 this.index == oBtn.length - 1 && (oDiv.style.cssText = "");
                 changeStyle(oDiv, oAtt[this.index], oVal[this.index])
-            }
+            })
         }
-    };
+
     </script>
 </body>
 
