@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	<script>
-		// window.onload = function(){
+		window.onload = function(){
 			var oLi = document.getElementById('calendar').getElementsByTagName('li');
 			var oMsg = document.getElementById('msg');
 			var oP = oMsg.getElementsByTagName('p')[0];
@@ -70,9 +70,8 @@
 					oStrong.innerHTML = this.index+1;
 					oP.innerHTML = oArray[this.index]
 				})
-			}
-			
-		// }
+			}	
+		}
 	</script>
 </body>
 </html>
