@@ -37,5 +37,46 @@
 			<p><input type="checkbox" name="item"><label>选项(十)</label></p>
 		</dd>
 	</dl>
+	<script>
+		// window.onload = function(){
+			var oA = document.getElementsByTagName('a')[0]
+			var oInput = document.getElementsByTagName('input')
+			var oLabel = document.getElementsByTagName('label')[0]
+			// 判断是否全选并相应**更新状态**
+			function isCheckAll(){
+				// 计算 checkbox 选中的个数 n
+				for(var i=1,n=0,len=oInput.length;i<len;i++){
+					// 遍历所有 checkbox 是否选中, 如果是, n++
+					oInput[i].checked && n++;
+				}
+				// 判断选中的个数 n 是否等于 oInput.length - 1
+				// 为什么是 oInput.length - 1 ? 因为 checkbox 的选中状态不可能会有 oInput.length 个
+				oInput[0].checked = n == oInput.length - 1;
+				oLabel.innerHTML = oInput[0].checked ? '全不选' : '全选'
+			}
+			// 全选/全不选
+			oInput[0].onclick = function(){
+				for(var i=1,len=oInput.length;i<len;i++){
+					oInput[i].checked = this.checked;
+				}
+				// 更新状态
+				isCheckAll();
+			}
+			// 反选
+			oA.addEventListener('click', function(){
+				for(var i=0,len=oInput.length;i<len;i++){
+					oInput[i].checked = !oInput[i].checked;
+				}
+				isCheckAll();
+			})
+			// 根据复选个数更新全选框状态
+			for(var i=0,len=oInput.length;i<len;i++){
+				oInput[i].addEventListener('click', function(){
+					isCheckAll();
+				})
+			}
+			// 
+		// }
+	</script>
 </body>
 </html>
