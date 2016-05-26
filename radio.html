@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>radio事件</title>
+    <script src="jquery.js"></script>
+</head>
+
+<body>
+
+    <input type="radio" name="sex" value="man">男
+    <input type="radio" name="sex" value="woman" checked="checked">女
+
+    
+    <script>
+    // jQuery
+   // $(window).on('load', function(){
+        // alert('加载完毕')
+        // 下面这个change事件不能放到 sexChange 函数里 , 
+        // 不然每次执行 sexChange(1) 或 sexChange(0), 会重复注册 change 事件, 
+        // 多次触发 change 时, 会触发多次的 change 事件
+        $('input[name=sex]').change(function() {
+            if (this.value == 'man') {
+                alert("manRadioChecked");
+            }
+            else if (this.value == 'woman') {
+                alert("womanRadioChecked");
+            }
+        });
+        function changeSex(manRadioCheckedOrNot){
+            var $manRadio = $('input[name=sex][value=man]');
+            var $womanRadio = $('input[name=sex][value=woman]');
+            if(manRadioCheckedOrNot==1){
+                $manRadio.prop('checked', true).trigger('change');
+            }else{
+                $womanRadio.prop('checked', true).trigger('change');
+            }
+
+       }
+       
+
+   // })
+   
+   
+  
+
+    </script>
+</body>
+
+</html>
