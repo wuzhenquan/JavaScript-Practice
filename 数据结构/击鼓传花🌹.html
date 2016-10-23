@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>优先队列</title>
+    <style media="screen">
+  
+    </style>
+</head>
+
+<body>
+    <script src = "Queue.js"></script>
+    <script>
+        function hotPotato(nameList, num){
+            var queue = new Queue()
+            for(var i=0; i<nameList.length; i++){
+                queue.enqueue(nameList[i])
+            }
+            var eliminated  = ''
+
+            while (queue.size() > 1){
+                for (var i=0; i<num; i++){
+                    queue.enqueue(queue.dequeue()) // 将队列开头移到队列末尾
+                } 
+                eliminated = queue.dequeue() // 结束循环后, 淘汰队列开头的那个人
+                console.log(eliminated  + '在击鼓传花游戏中被淘汰了')
+            }
+
+            return queue.dequeue()
+        }   
+        var names = ['Jhon', 'Jack', 'Camila','Ingrid','Carl']
+        var winner = hotPotato(names, 7)
+        console.log('胜利者: ' + winner)
+    </script>
+</body>
+
+</html>
+<style></style>
+<script></script>
