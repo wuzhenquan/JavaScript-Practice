@@ -1,16 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>JavaScript语法</title>
-       
-       
-</head>
 
-<body>
-    <a href="file:///E:/Documents%20and%20Settings/simon/%E6%A1%8C%E9%9D%A2/Untitled-1.html?aa=11&bb=cc
-"></a>
-<script type="text/javascript">
 /*URL分解*/
 //设定一个带有参数的URL  如:    file:///E:/Documents%20and%20Settings/simon/%E6%A1%8C%E9%9D%A2/Untitled-1.html?aa=11&bb=cc
 
@@ -27,6 +15,3 @@ for(i = 0; i < param.length; i++){
 //网页加载进度窗口, 页面没有内容时刷的太快, 可以通过onload控制.
 //var placeHolder2 = document.open('Untitled-2.html','test','width=300,height=300');
        
-</script>
-</body>
-</html>

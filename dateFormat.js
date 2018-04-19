@@ -1,12 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>JavaScript语法</title>
-       
-       
-</head>
-<script type="text/javascript">
+
 /*日期格式*/
 var thisDate = new Date();
 document.writeln(thisDate.toString());
@@ -14,8 +6,3 @@ document.writeln("<br/>");
 document.write(thisDate.getFullYear() + "-" + thisDate.getMonth() + "-" + thisDate.getDay());
 document.writeln("&nbsp;");
 document.writeln(thisDate.getHours() + ":" + thisDate.getMinutes() + ":" + thisDate.getSeconds() + "." + thisDate.getMilliseconds() );
-
-</script>
-<body>
-</body>
-</html>

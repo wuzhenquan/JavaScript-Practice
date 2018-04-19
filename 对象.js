@@ -1,12 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>JavaScript语法</title>
-       
-       
-</head>
-<script type="text/javascript">      
+  
 //Javascript对象
 /*对象 
     属性可以在对象内定义,如name,age;也可以在对象外定义,如addr
@@ -120,17 +112,3 @@ function cMyArr2(){
     }
     alert(str);
 }       
-       
-       
-       
-//-->  
-</script>
-<body>
-<button value="new person" onclick="newP()" >new person</button>
-<button value="new person" onclick="cHuman()" >new Human</button>
-<button value="new person" onclick="cSimon()" >new Simon</button>
-<button value="new person" onclick="cObj()" >new Obj</button>
-<button value="new person" onclick="cMyArr()" >new MyArr</button>
-<button value="new person" onclick="cMyArr2()" >new MyArr2</button>
-</body>
-</html>
