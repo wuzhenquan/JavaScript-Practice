@@ -10,6 +10,7 @@ function currying(func, length) {
       return func.apply(this, args) 
     }else{
       // 不够，递归 currying 函数，新的 func 为 bind 返回的新函数（bind 绑定了 ...args 参数，未执行），新的 length 为 func 剩余参数的长度
+      // 利用 bind 保存了参数
       return currying(func.bind(this, ...args), length - args.length) 
     }
   }
