@@ -1,3 +1,4 @@
+// https://github.com/pekonchan/Blog/issues/14
 /**
  * 节流函数
  * @param {Function} fn - 实际要执行的函数，对其进行节流处理

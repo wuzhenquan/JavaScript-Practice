@@ -1,3 +1,4 @@
+// https://github.com/pekonchan/Blog/issues/14
 /**
  * 防抖函数
  * @param {Function} fn - 实际要执行的函数

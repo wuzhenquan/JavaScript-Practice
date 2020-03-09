@@ -1,3 +1,4 @@
+// https://github.com/mqyqingfeng/Blog/issues/26
 function throttle(func, wait) {
     var timeout, context, args, result;
     var previous = 0;
