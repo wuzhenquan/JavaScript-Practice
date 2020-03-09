@@ -1,4 +1,4 @@
-class Animal {
+class Animal { // 想象等同于 ES5 的什么
   constructor(name){
     this.name = name
   }
@@ -7,7 +7,7 @@ class Animal {
   }
 }
 
-class Dog extends Animal{
+class Dog extends Animal{ // 想想等同于 ES5 的什么
   constructor(name){
     super(name)
   }
